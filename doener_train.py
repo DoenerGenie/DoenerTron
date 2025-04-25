@@ -37,9 +37,9 @@ def build_model():
         layers.Conv2D(64, 3, activation='relu'),
         layers.MaxPooling2D(),
         layers.Flatten(),
-        layers.Dense(64, activation='relu'),
+        layers.Dense(128, activation='relu'),  # Changed units from 64 to 128 for better accuracy
         layers.Dropout(0.5),
-        layers.Dense(len(CLASS_NAMES), activation='sigmoid')
+        layers.Dense(len(CLASS_NAMES), activation='softmax')  # Changed activation function to softmax for multi-class classification
     ])
 
 # Build and compile the model
