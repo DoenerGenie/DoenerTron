@@ -18,15 +18,17 @@ def predict_image(image_path, model):
     img_array = tf.expand_dims(img_array, 0)
     prediction = model.predict(img_array)
     print(prediction)
-
-    if prediction[0, 0] > 0.5:
-        return "Weder Döner noch Dürum!"
-    if prediction[0, 1] > 0.5:
+    if prediction[0, 0] > 0.8:
         return "Döner!"
-    if prediction[0, 2] > 0.5:
+    if prediction[0, 1] > 0.8:
         return "Dürum!"
 
     return "Weiss nicht!"
 
 
-print("Erwartet: Weder Döner noch Dürum. Ergebnis: ",  predict_image('./data/validation/nicht_doener/IMG_20240411_161044.jpg', loaded_model))
+print("Erwartet: Weder noch. Ergebnis: ",
+      predict_image('./data/validation/nicht_doener/IMG_20240411_161044.jpg', loaded_model))
+print("Erwartet: Döner! Ergebnis: ", predict_image('./data/validation/doener/R-2.jpg', loaded_model))
+print("Erwartet: Dürum! Ergebnis: ", predict_image('./data/validation/duerum/dueruem.jpg', loaded_model))
+print("Erwartet: Weder noch! Ergebnis: ", predict_image('./data/validation/nicht_doener/IMG_20240511_091700.jpg', loaded_model))
+
