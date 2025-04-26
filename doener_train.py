@@ -25,6 +25,7 @@ validation_dataset = load_dataset(VALIDATION_DIR)
 
 print("Class names:", train_dataset.class_names)
 drop_out = 0.6
+
 def build_model():
     """Build a convolutional neural network model"""
     return tf.keras.Sequential([
@@ -34,17 +35,15 @@ def build_model():
         layers.Conv2D(16, 3, activation='relu', padding='same'),
         layers.Conv2D(16, 3, activation='relu', padding='same'),
         layers.MaxPooling2D(),
-        layers.Dropout(0.6),
         layers.Conv2D(32, 3, activation='relu', padding='same'),
         layers.Conv2D(32, 3, activation='relu', padding='same'),
         layers.Conv2D(32, 3, activation='relu', padding='same'),
         layers.MaxPooling2D(),
-        layers.Dropout(0.6),
         layers.Conv2D(64, 3, activation='relu', padding='same'),
         layers.MaxPooling2D(),
         layers.Flatten(),
         layers.Dense(128, activation='relu'),  # Changed units from 64 to 128 for better accuracy
-        layers.Dropout(0.5),
+        layers.Dropout(drop_out),
         layers.Dense(len(CLASS_NAMES), activation='softmax')  # Changed activation function to softmax for multi-class classification
     ])
 
@@ -55,7 +54,6 @@ model.compile(
     loss='categorical_crossentropy',  # Update loss function to categorical cross-entropy
     metrics=['accuracy']
 )
-
 early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=25, verbose=1)
 
 history = model.fit(
